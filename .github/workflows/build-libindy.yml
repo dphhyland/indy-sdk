@@ -12,11 +12,14 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
 
     steps:
     - uses: actions/checkout@v2
+    - name: Prep
+      run: apt-get update && apt-get install -y build-essential pkg-config cmake libssl-dev libsqlite3-dev libzmq3-dev libncursesw5-dev
     - name: Build
-      run: indy-sdk/libindy/cargo build --verbose
+      run: cargo build --verbose
+      working-directory: ./indy-sdk/libindy
     - name: Run tests
       run: cargo test --verbose
