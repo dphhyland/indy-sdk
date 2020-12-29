@@ -29,12 +29,23 @@ jobs:
       working-directory: ./indy-sdk/libindy
 #   - name: Run tests
 #      run: cd libindy && RUST_TEST_THREADS=1 && cargo test --verbose
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: /home/runner/work/indy-sdk/indy-sdk/indy-sdk/libindy/target/debug
-        asset_name: libindy
-        tag: v1.15.0r
-        overwrite: true
-        body: "libindy v1.15.0"
+        tag_name: v1.15.1x
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path:  /home/runner/work/indy-sdk/indy-sdk/indy-sdk/libindy/target/debug/
+#         asset_name: my-artifact.zip
+#         asset_content_type: application/zip
