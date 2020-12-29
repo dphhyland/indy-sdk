@@ -23,7 +23,7 @@ jobs:
     - name: Install libsodium
       run: cd /tmp && curl https://download.libsodium.org/libsodium/releases/old/unsupported/libsodium-1.0.14.tar.gz | sudo tar -xz && cd /tmp/libsodium-1.0.14 && sudo ./configure --disable-shared && sudo make && sudo make install && sudo rm -rf /tmp/libsodium-1.0.14 
     - name: Build
-      run: cargo build --verbose
+      run: cd ./indy-sdk/libindy \ cargo build --verbose \ cd ..
       working-directory: ./indy-sdk/libindy
     - name: Run tests
       run: cargo test --verbose
