@@ -33,7 +33,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/debug
+        file: /home/runner/work/indy-sdk/indy-sdk/indy-sdk/libindy/target/debug
         asset_name: libindy
         tag: v1.15.0r
         overwrite: true
