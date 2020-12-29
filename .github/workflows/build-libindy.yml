@@ -23,7 +23,7 @@ jobs:
     - name: Install libsodium
       run: cd /tmp && curl https://download.libsodium.org/libsodium/releases/old/unsupported/libsodium-1.0.14.tar.gz | sudo tar -xz && cd /tmp/libsodium-1.0.14 && sudo ./configure --disable-shared && sudo make && sudo make install && sudo rm -rf /tmp/libsodium-1.0.14 
     - name: Checkout
-      run: git clone https://github.com/hyperledger/indy-sdk.git
+      run: git clone https://github.com/dphhyland/indy-sdk.git -b v1.15.0
     - name: Build
       run: cargo build --verbose
       working-directory: ./indy-sdk/libindy
