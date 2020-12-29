@@ -29,3 +29,12 @@ jobs:
       working-directory: ./indy-sdk/libindy
     - name: Run tests
       run: cd libindy && RUST_TEST_THREADS=1 && cargo test --verbose
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/debug
+        asset_name: libindy
+        tag: v1.15.0r
+        overwrite: true
+        body: "libindy v1.15.0"
