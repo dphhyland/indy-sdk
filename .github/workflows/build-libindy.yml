@@ -115,7 +115,7 @@ jobs:
         xcodebuild -version
     - name: Build iOS wrapper
       run: |
-          sudo /Users/runner/work/indy-sdk/indy-sdk/ci/ios-build.sh
+        /Users/runner/work/indy-sdk/indy-sdk/ci/ios-build.sh
     - uses: actions/upload-artifact@v2
       with:
         name: libvcx-ios-${{ env.PUBLISH_VERSION }}-device
