@@ -16,6 +16,8 @@ jobs:
       PUBLISH_VERSION: ${{ steps.mainstep.outputs.PUBLISH_VERSION }}
       RELEASE: ${{ steps.mainstep.outputs.RELEASE }}
       PRERELEASE: ${{ steps.mainstep.outputs.PRERELEASE }}
+      CACHE_KEY_LIBINDY: ${{ steps.mainstep.outputs.CACHE_KEY_LIBINDY }}    
+
     steps:
       - name: Git checkout
         uses: actions/checkout@v1
@@ -75,12 +77,15 @@ jobs:
             echo "This PR is from fork, nothing will be published because the CI wouldn't be able to access repo secrets to perform publish."
             PUBLISH_VERSION=""
           fi;
-          LIBVCX_SOURCE_HASH=${{ hashFiles('libvcx') }}
-          ALPINE_CORE_HASH=${{ hashFiles('ci/alpine_core.dockerfile')}}
-          LIBVCX_HASH=${LIBVCX_SOURCE_HASH:0:11}-${LIBVCX_NODE_WRAPPERS_HASH:0:11}-${LIBVCX_NODE_AGENT_HASH:0:11}-${LIBVCX_DOCKERFILE_HASH:0:11}-${AGENCY_CLIENT_HASH:0:11}
+          
+          LIBINDY_SOURCE_HASH=${{ hashFiles('libindy') }}
+          LIBINDY_HASH=${LIBINDY_SOURCE_HASH:0:11}
+   
           echo "::set-output name=PUBLISH_VERSION::$PUBLISH_VERSION"
           echo "::set-output name=RELEASE::$RELEASE"
           echo "::set-output name=PRERELEASE::$PRERELEASE"
+          
+          echo "::set-output name=CACHE_KEY_LIBINDY::$LIBINDY_HASH"
           
   build-libindy:
     runs-on: ubuntu-18.04
@@ -115,12 +120,12 @@ jobs:
         xcodebuild -version
     - name: Build iOS wrapper
       run: |
-        /Users/runner/work/indy-sdk/indy-sdk/ci/ios-build.sh
+        ./ci/ios-build.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: libvcx-ios-${{ env.PUBLISH_VERSION }}-device
+        name: libindy-ios-${{ env.PUBLISH_VERSION }}-device
         path: /tmp/artifacts/libvcx-ios-${{ env.PUBLISH_VERSION }}-device.zip
     - uses: actions/upload-artifact@v2
       with:
-        name: libvcx-ios-${{ env.PUBLISH_VERSION }}-universal
+        name: libindy-ios-${{ env.PUBLISH_VERSION }}-universal
         path: /tmp/artifacts/libvcx-ios-${{ env.PUBLISH_VERSION }}-universal.zip
