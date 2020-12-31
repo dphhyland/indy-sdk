@@ -124,8 +124,8 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: libindy-ios-${{ env.PUBLISH_VERSION }}-device
-        path: /tmp/artifacts/libvcx-ios-${{ env.PUBLISH_VERSION }}-device.zip
+        path: /tmp/artifacts/libindy-ios-${{ env.PUBLISH_VERSION }}-device.zip
     - uses: actions/upload-artifact@v2
       with:
         name: libindy-ios-${{ env.PUBLISH_VERSION }}-universal
-        path: /tmp/artifacts/libvcx-ios-${{ env.PUBLISH_VERSION }}-universal.zip
+        path: /tmp/artifacts/libindy-ios-${{ env.PUBLISH_VERSION }}-universal.zip
